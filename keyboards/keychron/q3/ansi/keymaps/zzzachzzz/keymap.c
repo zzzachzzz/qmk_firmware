@@ -44,10 +44,68 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL,  KC_LGUI,  KC_LALT,                                KC_SPC,                                 KC_RALT,  KC_RGUI,  TT(L1),     KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
     [L1] = LAYOUT_tkl_ansi(
-        _______,            KC_BRID,  KC_BRIU,  _______,  _______,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,    KC_VOLU,  _______,  _______,  RGB_TOG,
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,
-        RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,
-        _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  _______,  _______,  _______,              _______,
-        _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,
+        _______,            _______,  _______,  _______,  _______,  _______,  _______,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,    KC_VOLU,  _______,  _______,  RGB_TOG,
+        _______,  KC_MUTE,  KC_VOLD,  KC_VOLU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,
+        _______,  _______,  KC_MS_U,  _______,  _______,  _______,  _______,  KC_BTN1,  KC_BTN2,  _______,  KC_MPRV,  _______,  _______,    _______,  _______,  _______,  _______,
+        _______,  KC_MS_L,  KC_MS_D,  KC_MS_R,  _______,  _______,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  KC_MPLY,  _______,              _______,
+        _______,            _______,  _______,  _______,  _______,  _______,  KC_MNXT,  _______,  _______,  _______,  _______,              _______,            _______,
         _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______),
 };
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // case LT(L1, KC_ESC):
+        //     return 500;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    uint8_t mods = get_mods();
+    switch (keycode) {
+        case KC_LEFT: {
+            static bool home_key_registered = false;
+            if (record->event.pressed) {
+                if (
+                    // On Layer 1, H bound to Left
+                    layer_state_is(L1)
+                    && mods & MOD_MASK_ALT
+                ) {
+                    del_mods(MOD_MASK_ALT);
+                    register_code(KC_HOME);
+                    home_key_registered = true;
+                    set_mods(mods);
+                    return false;
+                }
+            } else if (home_key_registered) {
+                unregister_code(KC_HOME);
+                home_key_registered = false;
+                return false;
+            }
+            return true;
+        }
+        case KC_RIGHT: {
+            static bool end_key_registered = false;
+            if (record->event.pressed) {
+                if (
+                    // On Layer 1, L bound to Right
+                    layer_state_is(L1)
+                    && mods & MOD_MASK_ALT
+                ) {
+                    del_mods(MOD_MASK_ALT);
+                    register_code(KC_END);
+                    end_key_registered = true;
+                    set_mods(mods);
+                    return false;
+                }
+            } else if (end_key_registered) {
+                unregister_code(KC_END);
+                end_key_registered = false;
+                return false;
+            }
+            return true;
+        }
+    }
+    return true;
+}
