@@ -49,5 +49,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,  _______,  KC_MS_U,  _______,  _______,  _______,  _______,  KC_BTN1,  KC_BTN2,  _______,  KC_MPRV,  _______,  _______,    _______,  _______,  _______,  _______,
         _______,  KC_MS_L,  KC_MS_D,  KC_MS_R,  _______,  _______,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  KC_MPLY,  _______,              _______,
         _______,            _______,  _______,  _______,  _______,  _______,  KC_MNXT,  _______,  _______,  _______,  _______,              _______,            _______,
-        _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______),
+        _______,  _______,  _______,                                QK_LEAD,                                _______,  _______,  _______,    _______,  _______,  _______,  _______),
 };
+
+LEADER_EXTERNS();
+
+#define LEADER_RESET (leading = false, leader_end())
+
+void matrix_scan_user(void) {
+    if (leading && leader_sequence_size > 0) {
+        SEQ_ONE_KEY(KC_LEFT) {
+            register_code(KC_HOME);
+            unregister_code(KC_HOME);
+            return LEADER_RESET;
+        }
+        SEQ_ONE_KEY(KC_RIGHT) {
+            register_code(KC_END);
+            unregister_code(KC_END);
+            return LEADER_RESET;
+        }
+    }
+
+    if (leading && timer_elapsed(leader_time) > LEADER_TIMEOUT) {
+        return LEADER_RESET;
+    }
+}
