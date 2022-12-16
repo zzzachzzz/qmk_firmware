@@ -16,6 +16,12 @@
 
 #include QMK_KEYBOARD_H
 
+#if (__has_include("jokes.h"))
+#include "jokes.h"
+#else
+#define PARTLY_FUNNY_JOKE ""
+#endif
+
 enum layers {
     L0,
     L1,
@@ -68,6 +74,10 @@ void matrix_scan_user(void) {
         SEQ_ONE_KEY(KC_RIGHT) {
             register_code(KC_END);
             unregister_code(KC_END);
+            return LEADER_RESET;
+        }
+        SEQ_FOUR_KEYS(KC_PGDN, KC_BSPC, KC_PGDN, KC_BSPC) {
+            SEND_STRING(PARTLY_FUNNY_JOKE);
             return LEADER_RESET;
         }
     }
