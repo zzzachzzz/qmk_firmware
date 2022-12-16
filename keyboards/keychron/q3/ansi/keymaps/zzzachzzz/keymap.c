@@ -46,7 +46,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL,  KC_LGUI,  KC_LALT,                                KC_SPC,                                 KC_RALT,  KC_RGUI,  TT(L1),     KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
     [L1] = LAYOUT_tkl_ansi(
-        _______,            _______,  _______,  _______,  _______,  _______,  _______,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,    KC_VOLU,  _______,  _______,  RGB_TOG,
+        _______,            _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  RGB_TOG,
         _______,  KC_MUTE,  KC_VOLD,  KC_VOLU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,
         _______,  _______,  KC_MS_U,  _______,  _______,  _______,  _______,  KC_BTN1,  KC_BTN2,  _______,  KC_MPRV,  _______,  _______,    _______,  _______,  _______,  _______,
         _______,  KC_MS_L,  KC_MS_D,  KC_MS_R,  _______,  _______,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  KC_MPLY,  _______,              _______,
