@@ -16,7 +16,7 @@
 
 #include QMK_KEYBOARD_H
 
-enum layers{
+enum layers {
     L0,
     L1,
 };
@@ -32,6 +32,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 enum {
     SFT_CAPS = TD(TD_LSFT_CAPS),
     ESC_L1 = LT(L1, KC_ESC),
+    C_G_L = LCTL(LGUI(KC_LEFT)),
+    C_G_R = LCTL(LGUI(KC_RIGHT)),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -48,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,  KC_MUTE,  KC_VOLD,  KC_VOLU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,
         _______,  _______,  KC_MS_U,  _______,  _______,  _______,  _______,  KC_BTN1,  KC_BTN2,  _______,  KC_MPRV,  _______,  _______,    _______,  _______,  _______,  _______,
         _______,  KC_MS_L,  KC_MS_D,  KC_MS_R,  _______,  _______,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  KC_MPLY,  _______,              _______,
-        _______,            _______,  _______,  _______,  _______,  _______,  KC_MNXT,  _______,  _______,  _______,  _______,              _______,            _______,
+        _______,            _______,  _______,  _______,  _______,  _______,  KC_MNXT,  _______,  C_G_L,    C_G_R,    _______,              _______,            _______,
         _______,  _______,  _______,                                QK_LEAD,                                _______,  _______,  _______,    _______,  _______,  _______,  _______),
 };
 
