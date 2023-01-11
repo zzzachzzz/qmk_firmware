@@ -76,6 +76,16 @@ void matrix_scan_user(void) {
             unregister_code(KC_END);
             return LEADER_RESET;
         }
+        SEQ_ONE_KEY(KC_DOWN) {
+            register_code(KC_PAGE_DOWN);
+            unregister_code(KC_PAGE_DOWN);
+            return LEADER_RESET;
+        }
+        SEQ_ONE_KEY(KC_UP) {
+            register_code(KC_PAGE_UP);
+            unregister_code(KC_PAGE_UP);
+            return LEADER_RESET;
+        }
         SEQ_FOUR_KEYS(KC_PGDN, KC_BSPC, KC_PGDN, KC_BSPC) {
             SEND_STRING(PARTLY_FUNNY_JOKE);
             return LEADER_RESET;
